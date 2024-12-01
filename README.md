@@ -1,13 +1,12 @@
 # 🎅🏽🦖 Advent of Code 2024, solved using Deno and TypeScript
 
-A powerful and flexible setup for solving Advent of Code puzzles with Deno. This toolkit helps you scaffold, download, and solve puzzles with ease. 🧩
+## 👋🏽 Information
 
-## 🚀 Features
+Solutions in this repository are written in TypeScript and run using Deno. The `aoc` CLI tool is used to fetch inputs and run solutions.
 
-- **Automatic Scaffolding**: Generate boilerplate code for new days. 🛠️
-- **Puzzle Download**: Fetch inputs and puzzles directly from Advent of Code with the `aoc` CLI. 📦
-- **Task Runner**: Manage development tasks using Deno's `task` feature. ✅
-- **TypeScript Support**: Write clean, type-safe solutions. 📜
+Solutions can be found in the `days/` directory, with each day having its own file. Inputs and puzzle descriptions are stored in the `data/` directory.
+
+Generated from the [Deno AOC 2024 template](https://github.com/magnusrodseth/aoc-2024) by [@magnusrodseth](https://github.com/magnusrodseth)
 
 ## 📦 Setup
 
@@ -65,7 +64,3 @@ deno task test days/day01.ts
 - Write and test your solutions in the generated files.
 - Use `solve` to run and verify your answers.
 - Use `test` to run tests on example data for a specific day.
-
-## 👋🏽 Developer Information
-
-Made with ❤️ by [@magnusrodseth](https://github.com/magnusrodseth)
