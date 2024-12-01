@@ -4,7 +4,7 @@
 
 Solutions in this repository are written in TypeScript and run using Deno. The `aoc` CLI tool is used to fetch inputs and run solutions.
 
-Solutions can be found in the `days/` directory, with each day having its own file. Inputs and puzzle descriptions are stored in the `data/` directory.
+Solutions can be found in the `days/` directory, with each day having its own file. Inputs and puzzle descriptions have been omitted.
 
 Generated from the [Deno AOC 2024 template](https://github.com/magnusrodseth/aoc-2024) by [@magnusrodseth](https://github.com/magnusrodseth)
 
