@@ -54,9 +54,11 @@ const downloadCommand = new Deno.Command("aoc", {
     inputFilePath,
     "--puzzle-file",
     puzzleFilePath,
+    "--day",
+    formattedDay
   ],
   stdout: "piped",
-  stderr: "piped",
+  stderr: "piped"
 });
 
 try {
