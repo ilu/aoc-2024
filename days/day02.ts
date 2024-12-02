@@ -5,13 +5,12 @@ export function parseInput(input: string) {
 }
 
 function reportIsValid(report: number[]) {
-  const slopeIsPositive = report[0] < report[report.length - 1] ? true : false;
+  const slopeSign = report[0] < report.at(-1)!;
   for (let i = 1; i < report.length; i++) {
-    if (
-      report[i - 1] < report[i] !== slopeIsPositive ||
-      Math.abs(report[i - 1] - report[i]) < 1 ||
-      Math.abs(report[i - 1] - report[i]) > 3
-    ) {
+    const previous = report[i - 1];
+    const current = report[i];
+    const difference = Math.abs(previous - current);
+    if (previous < current !== slopeSign || difference < 1 || difference > 3) {
       return false;
     }
   }
@@ -25,7 +24,8 @@ export function partOne(input: string) {
 
 export function partTwo(input: string) {
   const reports = parseInput(input);
-  // Generate all possible dampened reports by removing one element and check if they are valid
+  // Generate all possible dampened reports by removing one element at a time
+  // and check if any of them is valid
   return reports.filter((report) =>
     report
       .map((_, i) => report.filter((_, j) => j !== i))
