@@ -4,31 +4,31 @@ export function parseInput(input: string) {
   });
 }
 
-function findWord(
-  grid: string[][],
-  word: string[],
-  coordinates: { x: number; y: number },
-  direction: [number, number]
-): number {
-  let { x, y } = coordinates;
-  const [dx, dy] = direction;
-  for (const char of word) {
-    if (
-      x < 0 ||
-      x >= grid[0].length ||
-      y < 0 ||
-      y >= grid.length ||
-      grid[y][x] !== char
-    ) {
-      return 0;
-    }
-    x += dx;
-    y += dy;
-  }
-  return 1;
-}
-
 export function partOne(input: string) {
+  function findWord(
+    grid: string[][],
+    word: string[],
+    coordinates: { x: number; y: number },
+    direction: [number, number]
+  ): number {
+    let { x, y } = coordinates;
+    const [dx, dy] = direction;
+    for (const char of word) {
+      if (
+        x < 0 ||
+        x >= grid[0].length ||
+        y < 0 ||
+        y >= grid.length ||
+        grid[y][x] !== char
+      ) {
+        return 0;
+      }
+      x += dx;
+      y += dy;
+    }
+    return 1;
+  }
+
   const grid = parseInput(input);
   const directions: [number, number][] = [
     [1, 0],
@@ -55,53 +55,31 @@ export function partOne(input: string) {
   return count;
 }
 
-const validXmases = [
-  `
-M.S
-.A.
-M.S
-`,
-  `
-S.S
-.A.
-M.M
-`,
-  `
-M.M
-.A.
-S.S
-`,
-  `
-S.M
-.A.
-S.M
-`
-];
-
-function generateView(grid: string[][], j: number, i: number) {
-  return [
-    [grid[j][i], ".", grid[j][i + 2]].join(""),
-    [".", grid[j + 1][i + 1], "."].join(""),
-    [grid[j + 2][i], ".", grid[j + 2][i + 2]].join("")
-  ]
-    .join("\n")
-    .trim();
-}
-
 export function partTwo(input: string) {
+  function generateView(grid: string[][], y: number, x: number) {
+    return [
+      grid[y][x],
+      grid[y][x + 2],
+      grid[y + 1][x + 1],
+      grid[y + 2][x],
+      grid[y + 2][x + 2]
+    ].join("");
+  }
+  const validViews = [`MSAMS`, `SSAMM`, `MMASS`, `SMASM`];
   const grid = parseInput(input);
+
   let count = 0;
-  for (let i = 0; i < grid.length - 2; i++) {
-    for (let j = 0; j < grid[i].length - 2; j++) {
-      const view = generateView(grid, j, i);
-      for (const xmas of validXmases) {
-        if (view === xmas.trim()) {
+  grid.slice(0, -3).forEach((row, y) => {
+    row.slice(0, -3).forEach((_, x) => {
+      const view = generateView(grid, y, x);
+      for (const validView of validViews) {
+        if (view === validView) {
           count++;
           break;
         }
       }
-    }
-  }
+    });
+  });
   return count;
 }
 
