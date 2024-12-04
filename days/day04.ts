@@ -4,31 +4,31 @@ export function parseInput(input: string) {
   });
 }
 
-export function partOne(input: string) {
-  function findWord(
-    grid: string[][],
-    word: string[],
-    coordinates: { x: number; y: number },
-    direction: [number, number]
-  ): number {
-    let { x, y } = coordinates;
-    const [dx, dy] = direction;
-    for (const char of word) {
-      if (
-        x < 0 ||
-        x >= grid[0].length ||
-        y < 0 ||
-        y >= grid.length ||
-        grid[y][x] !== char
-      ) {
-        return 0;
-      }
-      x += dx;
-      y += dy;
+function findWord(
+  grid: string[][],
+  word: string[],
+  coordinates: { x: number; y: number },
+  direction: [number, number]
+): number {
+  let { x, y } = coordinates;
+  const [dx, dy] = direction;
+  for (const char of word) {
+    if (
+      x < 0 ||
+      x >= grid[0].length ||
+      y < 0 ||
+      y >= grid.length ||
+      grid[y][x] !== char
+    ) {
+      return 0;
     }
-    return 1;
+    x += dx;
+    y += dy;
   }
+  return 1;
+}
 
+export function partOne(input: string) {
   const grid = parseInput(input);
   const directions: [number, number][] = [
     [1, 0],
@@ -57,30 +57,25 @@ export function partOne(input: string) {
 
 export function partTwo(input: string) {
   function generateView(grid: string[][], y: number, x: number) {
-    return [
-      grid[y][x],
-      grid[y][x + 2],
-      grid[y + 1][x + 1],
-      grid[y + 2][x],
-      grid[y + 2][x + 2]
-    ].join("");
+    const offSets = [
+      [0, 0],
+      [0, 2],
+      [1, 1],
+      [2, 0],
+      [2, 2]
+    ];
+    return offSets.map(([dy, dx]) => grid[y + dy][x + dx]).join("");
   }
-  const validViews = [`MSAMS`, `SSAMM`, `MMASS`, `SMASM`];
-  const grid = parseInput(input);
 
-  let count = 0;
-  grid.slice(0, -3).forEach((row, y) => {
-    row.slice(0, -3).forEach((_, x) => {
-      const view = generateView(grid, y, x);
-      for (const validView of validViews) {
-        if (view === validView) {
-          count++;
-          break;
-        }
-      }
-    });
-  });
-  return count;
+  const grid = parseInput(input);
+  const validViews = [`MSAMS`, `SSAMM`, `MMASS`, `SMASM`];
+
+  return grid.slice(0, -2).flatMap((row, y) =>
+    row
+      .slice(0, -2)
+      .map((_, x) => generateView(grid, y, x))
+      .filter((view) => validViews.includes(view))
+  ).length;
 }
 
 import { assertEquals } from "@std/assert";
