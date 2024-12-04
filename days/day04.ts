@@ -8,7 +8,7 @@ function findWord(
   grid: string[][],
   word: string[],
   coordinates: { x: number; y: number },
-  direction: [number, number]
+  direction: readonly [number, number]
 ): number {
   let { x, y } = coordinates;
   const [dx, dy] = direction;
@@ -30,7 +30,7 @@ function findWord(
 
 export function partOne(input: string) {
   const grid = parseInput(input);
-  const directions: [number, number][] = [
+  const directions = [
     [1, 0],
     [-1, 0],
     [0, 1],
@@ -39,7 +39,7 @@ export function partOne(input: string) {
     [-1, -1],
     [1, -1],
     [-1, 1]
-  ];
+  ] as const;
   const word = "XMAS".split("");
   let count = 0;
   grid.forEach((row, y) => {
